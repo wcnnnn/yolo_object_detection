@@ -1,0 +1,6 @@
+opencv-python
+numpy
+tkinter
+mysql-connector-python
+torch
+torchvision
