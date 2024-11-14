@@ -21,20 +21,20 @@
 ## 安装步骤
 
 1. 克隆项目
-
+```
 bash
 git clone https://github.com/wcnnnn/yolo_object_detection.git
 cd yolo_object_detection
 
 2. 创建虚拟环境（推荐）
-
+```
 bash
 python -m venv venv
 source venv/bin/activate # Linux/Mac
 venv\Scripts\activate # Windows
 
 3. 安装依赖\
-
+```
 bash
 pip install -r requirements.txt
 
@@ -60,7 +60,7 @@ yolo_object_detection/
 ## 使用说明
 
 1. 启动程序
-
+```
 bash
 python main.py
 
