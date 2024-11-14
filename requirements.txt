@@ -1,6 +1,24 @@
-opencv-python
-numpy
-tkinter
-mysql-connector-python
-torch
-torchvision
+# 基础依赖
+opencv-python>=4.8.0
+numpy>=1.24.0
+pillow>=10.0.0
+
+# GUI相关
+tk>=0.1.0
+matplotlib>=3.7.0
+SciencePlots>=2.1.0
+
+# 深度学习框架
+torch>=2.0.0
+torchvision>=0.15.0
+ultralytics>=8.0.0
+
+# 数据库
+mysql-connector-python>=8.0.0
+
+# 数据处理
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# 工具库
+python-dateutil>=2.8.0
