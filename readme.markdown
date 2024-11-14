@@ -44,28 +44,19 @@ pip install -r requirements.txt
 - 修改 config.py 中的数据库配置
 
 ## 项目结构
+```plaintext
 yolo_object_detection/
-├── main.py # 程序入口
-
-├── ui.py # 用户界面模块
-
-├── detector.py # YOLO检测模块
-
-├── database.py # 数据库操作模块
-
-├── visualization.py # 数据可视化模块
-
-├── config_manager.py # 配置管理模块
-
-├── report_generator.py # 报告生成模块
-
-├── config.py # 配置文件
-
-├── requirements.txt # 依赖包列表
-
-└── README.md # 项目说明文档
-
-
+├── main.py                # 程序入口点
+├── ui.py                  # 用户界面模块
+├── detector.py            # YOLO检测逻辑实现
+├── database.py            # 数据库交互功能
+├── visualization.py       # 检测结果的可视化工具
+├── config_manager.py      # 配置文件读写管理
+├── report_generator.py    # 生成检测报告
+├── config.py              # 应用配置参数
+├── requirements.txt       # 项目依赖项列表
+└── README.md              # 项目介绍与使用指南
+```
 ## 使用说明
 
 1. 启动程序
