@@ -33,7 +33,7 @@ python -m venv venv
 source venv/bin/activate # Linux/Mac
 venv\Scripts\activate # Windows
 ```
-3. 安装依赖\
+3. 安装依赖
 ```
 bash
 pip install -r requirements.txt
@@ -46,14 +46,23 @@ pip install -r requirements.txt
 ## 项目结构
 yolo_object_detection/
 ├── main.py # 程序入口
+
 ├── ui.py # 用户界面模块
+
 ├── detector.py # YOLO检测模块
+
 ├── database.py # 数据库操作模块
+
 ├── visualization.py # 数据可视化模块
+
 ├── config_manager.py # 配置管理模块
+
 ├── report_generator.py # 报告生成模块
+
 ├── config.py # 配置文件
+
 ├── requirements.txt # 依赖包列表
+
 └── README.md # 项目说明文档
 
 
@@ -63,7 +72,7 @@ yolo_object_detection/
 ```
 bash
 python main.py
-
+```
 
 2. 主要功能
 - 开始/停止检测：控制视频检测
@@ -118,7 +127,7 @@ python main.py
 
 ## 维护者
 
-- [Your Name](https://github.com/yourusername)
+- [wcnnnn](https://github.com/wcnnnn)
 
 ## 许可证
 
