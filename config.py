@@ -3,9 +3,9 @@
 # 数据库配置
 DB_CONFIG = {
     'user': 'root',
-    'password': 'wn159753',  
-    'host': '127.0.0.1',
-    'port': 3306,
+    'password': '',  
+    'host': '',
+    'port': ,
     'database': 'my_database',
     'pool_name': 'mypool',
     'pool_size': 5,
