@@ -203,7 +203,7 @@ class MainWindow(QMainWindow):
             
             # 创建消息处理器
             self.message_handler = MessageHandler(
-                "sk-7a283ea1e5084e34b15dc59d332eacf8"
+                "你的APIKEY"
             )
             
             # 连接信号
