@@ -1,11 +1,13 @@
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QImage, QPixmap
 import cv2
 import numpy as np
+import qtawesome as qta
 
 class VideoDisplay(QWidget):
     detection_signal = pyqtSignal(str, float, float, float)
+    camera_status_signal = pyqtSignal(bool)
 
     def __init__(self, model_manager, db_manager):
         super().__init__()
@@ -14,17 +16,105 @@ class VideoDisplay(QWidget):
         self.is_detecting = False
         self.capture = None
         self.timer = None
+        self.is_camera_on = False
         self.init_ui()
-        self.setup_camera()
-        self.start_preview()
-
+        
     def init_ui(self):
-        layout = QVBoxLayout()
+        main_layout = QVBoxLayout()
+        
+        control_layout = QHBoxLayout()
+        
+        self.start_camera_btn = QPushButton()
+        self.start_camera_btn.setIcon(qta.icon('fa5s.video'))
+        self.start_camera_btn.setToolTip('开启摄像头')
+        self.start_camera_btn.clicked.connect(self.start_camera)
+        self.start_camera_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #4CAF50;
+                border: none;
+                border-radius: 5px;
+                padding: 8px;
+                min-width: 40px;
+            }
+            QPushButton:hover {
+                background-color: #45a049;
+            }
+            QPushButton:disabled {
+                background-color: #cccccc;
+            }
+        """)
+        
+        self.stop_camera_btn = QPushButton()
+        self.stop_camera_btn.setIcon(qta.icon('fa5s.video-slash'))
+        self.stop_camera_btn.setToolTip('关闭摄像头')
+        self.stop_camera_btn.clicked.connect(self.stop_camera)
+        self.stop_camera_btn.setEnabled(False)
+        self.stop_camera_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #f44336;
+                border: none;
+                border-radius: 5px;
+                padding: 8px;
+                min-width: 40px;
+            }
+            QPushButton:hover {
+                background-color: #da190b;
+            }
+            QPushButton:disabled {
+                background-color: #cccccc;
+            }
+        """)
+        
+        control_layout.addWidget(self.start_camera_btn)
+        control_layout.addWidget(self.stop_camera_btn)
+        control_layout.addStretch()
+        
         self.video_label = QLabel()
         self.video_label.setAlignment(Qt.AlignCenter)
         self.video_label.setMinimumSize(640, 480)
-        layout.addWidget(self.video_label)
-        self.setLayout(layout)
+        self.video_label.setStyleSheet("""
+            QLabel {
+                background-color: #f0f0f0;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+            }
+        """)
+        
+        main_layout.addLayout(control_layout)
+        main_layout.addWidget(self.video_label)
+        self.setLayout(main_layout)
+
+    def start_camera(self):
+        if not self.is_camera_on:
+            if self.setup_camera():
+                self.is_camera_on = True
+                self.start_preview()
+                self.start_camera_btn.setEnabled(False)
+                self.stop_camera_btn.setEnabled(True)
+                self.camera_status_signal.emit(True)
+                self.video_label.clear()
+
+    def stop_camera(self):
+        if self.is_camera_on:
+            if self.timer:
+                self.timer.stop()
+            if self.capture:
+                self.capture.release()
+            self.capture = None
+            self.is_camera_on = False
+            self.start_camera_btn.setEnabled(True)
+            self.stop_camera_btn.setEnabled(False)
+            self.camera_status_signal.emit(False)
+            self.video_label.setText("摄像头已关闭")
+            self.video_label.setStyleSheet("""
+                QLabel {
+                    background-color: #f0f0f0;
+                    border: 2px solid #ddd;
+                    border-radius: 5px;
+                    color: #666;
+                    font-size: 16px;
+                }
+            """)
 
     def setup_camera(self):
         if self.capture is None:
@@ -51,6 +141,9 @@ class VideoDisplay(QWidget):
         print("停止检测")
 
     def update_frame(self):
+        if not self.is_camera_on:
+            return
+            
         ret, frame = self.capture.read()
         if ret:
             if self.is_detecting:
@@ -87,6 +180,5 @@ class VideoDisplay(QWidget):
         return frame
 
     def closeEvent(self, event):
-        if self.capture is not None:
-            self.capture.release()
+        self.stop_camera()
         super().closeEvent(event)
