@@ -6,10 +6,10 @@ import os
 class DatabaseManager:
     def __init__(self):
         self.db_config = {
-            'user': 'root',
-            'password': 'wn159753',
-            'host': '127.0.0.1',
-            'port': 3306
+            'user': '·',
+            'password': '·',
+            'host': '·',
+            'port': ·
         }
         # 首先创建数据库（如果不存在）
         self.create_database()
